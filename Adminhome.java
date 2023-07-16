@@ -34,13 +34,10 @@ public class Adminhome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminhome);
 
-
-
         postRecyclerView = findViewById(R.id.postRecyclerView);
         postAdapter = new PostAdapter(posts);
         postRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         postRecyclerView.setAdapter(postAdapter);
-
 
         // Get the list of posts from your data source
         //List<Post> fetchedPosts = getPostsFromDataSource();
@@ -57,9 +54,6 @@ public class Adminhome extends AppCompatActivity {
         posts.add(post2);
         postAdapter.notifyDataSetChanged();
 
-
-
-
     }
     private List<Post> getPostsFromDataSource() {
         FirebaseDatabase ref1 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
@@ -68,7 +62,6 @@ public class Adminhome extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                
             }
 
             @Override
@@ -76,7 +69,5 @@ public class Adminhome extends AppCompatActivity {
                 // Handle the error if any
             }
         });
-        
     }
-
 }
