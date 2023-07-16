@@ -36,14 +36,11 @@ public class Menu_content extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminhome);
         logout = findViewById(R.id.logoutadmin);
         userTypeSpinnerad = findViewById(R.id.userTypeSpinnerad);
-
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +55,6 @@ public class Menu_content extends AppCompatActivity {
         contentsAdaptors = new contentsAdaptor(contentsz);
         postRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         userTypeSpinnerad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -67,14 +63,12 @@ public class Menu_content extends AppCompatActivity {
                 postAdapter.notifyDataSetChanged();
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 //Toast.makeText(Adminhome.this, "Selected item: " + selectedItem, Toast.LENGTH_SHORT).show();
-
                 if(selectedItem.equals("Content")){
                     //Button subscribeButton = findViewById(R.id.Subscribe);
                     //subscribeButton.setText("Verify");
                     postRecyclerView.setAdapter(contentsAdaptors);
                     FirebaseDatabase ref1 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
                     databaseReference1 = ref1.getReference().child("Content");
-
                     databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
@@ -96,13 +90,9 @@ public class Menu_content extends AppCompatActivity {
                             }
                             contentsAdaptors.notifyDataSetChanged();
                         }
-
                         @Override
                         public void onCancelled(@NotNull DatabaseError databaseError) { }
                     });
-
-
-
                 }
             }
 
@@ -110,8 +100,6 @@ public class Menu_content extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
                 // Do nothing
             }
-
-
         });
 
         contentsAdaptors.setOnItemClickListener(new contentsAdaptor.OnItemClickListener() {
@@ -122,14 +110,11 @@ public class Menu_content extends AppCompatActivity {
                 FirebaseDatabase ref1 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
                 databaseReference1 = ref1.getReference().child("Content");
                 databaseReference1.child(keys).child("verify").setValue("1");
-
-
                 databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                         contentsz.clear();
                         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-
                             String name = childSnapshot.child("title").getValue(String.class); // Get the name
                             String id = childSnapshot.child("owner").getValue().toString().trim();
                             String price = childSnapshot.child("price").getValue().toString().trim();
