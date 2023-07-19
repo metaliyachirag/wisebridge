@@ -112,7 +112,7 @@ public class Homeuser extends AppCompatActivity {
 
                                 }
                                 else{
-                                    if(childSnapshot.child("subject").getValue().toString().equals("ASE")){
+                                    if(childSnapshot.child("subject").getValue().toString().equals("Acc")){
                                         String name = childSnapshot.child("title").getValue(String.class); // Get the name
                                         String id = childSnapshot.child("owner").getValue().toString().trim();
                                         String price = childSnapshot.child("price").getValue().toString().trim();
@@ -138,7 +138,94 @@ public class Homeuser extends AppCompatActivity {
                     });
 
                 }
-                
+                else if(selectedItem.equals("Elective")){
+                    //Button subscribeButton = findViewById(R.id.Subscribe);
+                    //subscribeButton.setText("Verify");
+                    postRecyclerView.setAdapter(contentsAdaptors);
+                    FirebaseDatabase ref1 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
+                    databaseReference1 = ref1.getReference().child("Content");
+                    contentsz.clear();
+
+                    databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                if(childSnapshot.child("subscribers").child(username2).exists()){
+
+                                }
+                                else {
+
+                                    if (childSnapshot.child("subject").getValue().toString().equals("Elective")) {
+                                        String name = childSnapshot.child("title").getValue(String.class); // Get the name
+                                        String id = childSnapshot.child("owner").getValue().toString().trim();
+                                        String price = childSnapshot.child("price").getValue().toString().trim();
+                                        String descr = childSnapshot.child("description").getValue().toString().trim();
+                                        String ver = childSnapshot.child("verify").getValue().toString();
+                                        String keys = childSnapshot.child("keys").getValue().toString();
+                                        contents content = new contents(name, id, descr, price, keys); // Create a new Post object
+                                        contentsz.add(content);
+                                    }
+                                }
+
+
+
+
+                            }
+                            contentsAdaptors.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NotNull DatabaseError databaseError) { }
+                    });
+
+                }
+                else if(selectedItem.equals("Ase")){
+                    //Button subscribeButton = findViewById(R.id.Subscribe);
+                    //subscribeButton.setText("Verify");
+                    postRecyclerView.setAdapter(contentsAdaptors);
+                    FirebaseDatabase ref1 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
+                    databaseReference1 = ref1.getReference().child("Content");
+                    contentsz.clear();
+
+                    databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                if(childSnapshot.child("subscribers").child(username2).exists()){
+
+                                }
+                                else {
+
+                                    if (childSnapshot.child("subject").getValue().toString().equals("Ase")) {
+                                        String name = childSnapshot.child("title").getValue(String.class); // Get the name
+                                        String id = childSnapshot.child("owner").getValue().toString().trim();
+                                        String price = childSnapshot.child("price").getValue().toString().trim();
+                                        String descr = childSnapshot.child("description").getValue().toString().trim();
+                                        String ver = childSnapshot.child("verify").getValue().toString();
+                                        String keys = childSnapshot.child("keys").getValue().toString();
+                                        contents content = new contents(name, id, descr, price, keys); // Create a new Post object
+                                        contentsz.add(content);
+                                    }
+                                }
+
+
+
+
+                            }
+                            contentsAdaptors.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NotNull DatabaseError databaseError) { }
+                    });
+
+
+
+                }
+            }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Do nothing
@@ -430,8 +517,72 @@ public class Homeuser extends AppCompatActivity {
     }
 
 
-    
+    public static void downloadedFile(Context context, String fileUrl, String fileName) {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(fileUrl);
+        storageRef.getDownloadUrl().addOnSuccessListener(downloadUrl -> {
+            String url = downloadUrl.toString();
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                    .setAllowedOverRoaming(false)
+                    .setTitle(fileName)
+                    .setDescription("Downloading...")
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
 
-
+            DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+            if (downloadManager != null) {
+                downloadManager.enqueue(request);
+            }
+        }).addOnFailureListener(exception -> {
+            Toast.makeText(context, "Failed to retrieve download URL", Toast.LENGTH_SHORT).show();
+        });
     }
 
+
+
+    private void downloadFile(String idl) {
+        // Retrieve the download URL from Firebase Realtime Database
+        storageRef = FirebaseStorage.getInstance("gs://wisebridge-c303a.appspot.com").getReference();
+        FirebaseDatabase ref1 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
+        databaseRef = ref1.getReference().child("Content").child(idl);
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@com.google.firebase.database.annotations.NotNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String downloadUrl = dataSnapshot.child("url").getValue().toString();
+                    if (downloadUrl != null) {
+                        // Download the file from Firebase Storage
+                        Toast.makeText(Homeuser.this,downloadUrl,Toast.LENGTH_SHORT).show();
+                        StorageReference fileRef = FirebaseStorage.getInstance("gs://wisebridge-c303a.appspot.com").getReferenceFromUrl(downloadUrl);
+                        try {
+                            File localFile = File.createTempFile("downloaded_file", "");
+                            fileRef.getFile(localFile)
+                                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                            Toast.makeText(Homeuser.this, "File downloaded!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@com.google.firebase.database.annotations.NotNull Exception e) {
+                                            Toast.makeText(Homeuser.this, "Failed to download file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(Homeuser.this, "No file found!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@com.google.firebase.database.annotations.NotNull DatabaseError databaseError) {
+                Toast.makeText(Homeuser.this, "Failed to retrieve file data: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+}
