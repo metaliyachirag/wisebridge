@@ -41,7 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="16dp" />
-
         <LinearLayout
             android:id="@+id/logbtn1"
             android:layout_width="match_parent"
@@ -51,7 +50,6 @@
             android:background="#fff"
             android:gravity="center_horizontal"
             android:orientation="vertical"/>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postRecyclerView3"
@@ -65,7 +63,6 @@
             android:layout_height="wrap_content">
 
             <!-- Other content if needed -->
-
             <Button
                 android:id="@+id/logoutadmin1"
                 android:layout_width="match_parent"
@@ -75,7 +72,5 @@
                 android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
-
-
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
