@@ -1,0 +1,96 @@
+<androidx.core.widget.NestedScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="248dp"
+            android:background="@color/darkblue"
+            android:orientation="vertical"
+            android:padding="50dp"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                style="@android:style/Widget.TextView.PopupMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload file"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/logbtn"
+            android:layout_width="match_parent"
+            android:layout_height="558dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#fff"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/userTypeSpinner2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:entries="@array/user_types_subjects" />
+
+            <EditText
+                android:id="@+id/titlee"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:drawableLeft="@drawable/ic_lightbulb_outline_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="Enter Title" />
+
+            <EditText
+                android:id="@+id/desc"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/ic_security_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="Enter Description" />
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/ic_lightbulb_outline_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="Enter Price" />
+
+            <Button
+                android:id="@+id/selectFileButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select File"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittextstyle"/>
+
+            <Button
+                android:id="@+id/uploadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload File"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittextstyle"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
