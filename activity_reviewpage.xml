@@ -69,7 +69,6 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"/>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postRecyclerView4"
             android:layout_width="match_parent"
@@ -78,7 +77,6 @@
             android:padding="16dp" />
 
         <EditText
-
             android:id="@+id/revdes"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
@@ -104,7 +102,7 @@
             android:background="@drawable/edittextstyle"
             android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:text="Submit Review"
+            android:text="Add Review"
             android:textColor="#fff" />
 
         <RelativeLayout
@@ -112,7 +110,7 @@
             android:layout_height="wrap_content"
             android:padding="30dp">
 
-            <!-- Other content if needed -->
+            <!-- Add Other content if needed -->
 
             <Button
                 android:id="@+id/logoutadmin2"
@@ -123,7 +121,5 @@
                 android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
-
-
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
