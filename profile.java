@@ -39,8 +39,6 @@ public class profile extends AppCompatActivity {
         hm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if(usertype.equals("Student")){
                     Intent intent = new Intent(profile.this,Subscriptions.class);
                     intent.putExtra("username2", username);
@@ -72,7 +70,7 @@ public class profile extends AppCompatActivity {
             Homebtn.setText("Home");
             hm.setText("Subscriptions");
         }
-
+        
         Homebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,11 +87,6 @@ public class profile extends AppCompatActivity {
                 }
             }
         });
-
-        
-
-
-
 
         // Use the username to access corresponding children in the Firebase database
         if(usertype.equals("Student")){
