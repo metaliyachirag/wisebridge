@@ -24,9 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Reviewpage extends AppCompatActivity {
-    public static String RKeys,RDesc,Rido,types;
+    public static String RKeys,RDesc,Rido,types,users;
+    public static String revs,rats;
     TextView Cnamee,Cdesc,Cowner;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,databaseReference1;
     EditText revdes,revrate;
     Button revbut;
     public static RecyclerView ReviewsRecyclerView;
@@ -41,10 +42,11 @@ public class Reviewpage extends AppCompatActivity {
         RDesc = getIntent().getStringExtra("Description");
         Rido = getIntent().getStringExtra("IDowner");
         types = getIntent().getStringExtra("types");
+        users = getIntent().getStringExtra("users");
         revbut = findViewById(R.id.revbut);
         revdes = findViewById(R.id.revdes);
         revrate = findViewById(R.id.revrate);
-        Toast.makeText(Reviewpage.this, types, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Reviewpage.this, types, Toast.LENGTH_SHORT).show();
 
         ReviewsRecyclerView = findViewById(R.id.ReviewsRecyclerView21);
         reviewsAdaptors = new ReviewsAdaptor(Reviewsz);
@@ -55,6 +57,8 @@ public class Reviewpage extends AppCompatActivity {
         ReviewsRecyclerView.setAdapter(reviewsAdaptors);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 Reviewsz.clear();
@@ -70,6 +74,10 @@ public class Reviewpage extends AppCompatActivity {
                             //Toast.makeText(Reviewpage.this, rev, Toast.LENGTH_SHORT).show();
                         }
                         reviewsAdaptors.notifyDataSetChanged();
+
+
+
+
                     }
                 }
 
@@ -83,6 +91,7 @@ public class Reviewpage extends AppCompatActivity {
             @Override
             public void onCancelled(@NotNull DatabaseError databaseError) { }
         });
+
 
         //Toast.makeText(Reviewpage.this, "You pressed: "+RKeys +"\nwith description: " + RDesc + "\nwith ID: "+ Rido, Toast.LENGTH_SHORT).show();
         //Log.d("Tag","You pressed: "+RKeys +"\nwith description: " + RDesc + "\nwith ID: "+ Rido);
@@ -99,9 +108,53 @@ public class Reviewpage extends AppCompatActivity {
             revdes.setVisibility(View.GONE);
             revbut.setVisibility(View.GONE);
         }
-        else{
+        else if(types.equals("Student")){
 
+                FirebaseDatabase ref2 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
+                databaseReference1 = ref2.getReference().child("Content").child(RKeys).child("reviews").child(users);
+
+                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            Toast.makeText((getApplicationContext()), "Already Reviewed", Toast.LENGTH_SHORT).show();
+                            revrate.setText("Already reviwed");
+                            revdes.setVisibility(View.GONE);
+                            revbut.setVisibility(View.GONE);
+                        }
+                        else{
+                            Toast.makeText((getApplicationContext()), "It is not there", Toast.LENGTH_SHORT).show();
+                            revbut.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    revs = revdes.getText().toString().trim();
+                                    rats = revrate.getText().toString().trim();
+
+                                    if(revs.isEmpty() || rats.isEmpty()){
+                                        Toast.makeText(Reviewpage.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        databaseReference1.child("rate").setValue(rats);
+                                        databaseReference1.child("rev").setValue(revs);
+                                        revrate.setText("Reviwed Successfully");
+                                        revdes.setVisibility(View.GONE);
+                                        revbut.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NotNull DatabaseError databaseError) { }
+                });
+
+
+            }
         }
 
     }
-}
+
