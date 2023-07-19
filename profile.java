@@ -90,7 +90,38 @@ public class profile extends AppCompatActivity {
             }
         });
 
+        
 
+
+
+
+        // Use the username to access corresponding children in the Firebase database
+        if(usertype.equals("Student")){
+             userRef = FirebaseDatabase.getInstance().getReference().child("Register").child(username);
+        }
+        else if(usertype.equals("Expert")){
+             userRef = FirebaseDatabase.getInstance().getReference().child("ExpRegister").child(username);
+        }
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Access the children and display the data as needed
+                    String name = dataSnapshot.child("name").getValue(String.class).trim();
+                    String email = dataSnapshot.child("email").getValue(String.class).trim();
+
+                    // Use the retrieved data as desired
+                    un.setText(name);
+                    uid.setText(username);
+                    umail.setText(email);
+                    Toast.makeText(profile.this, username, Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // Handle the case when the user does not exist in the database
+                    Log.d("Profile", "User does not exist");
+                }
+            }
 
 
 
