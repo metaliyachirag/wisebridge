@@ -69,6 +69,88 @@ public class Subscriptions extends AppCompatActivity {
             FirebaseDatabase ref1 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
             databaseReference1 = ref1.getReference().child("Content");
             contentsz.clear();
+databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                        if (childSnapshot.child("subscribers").child(username2).exists()) {
+
+                            String name = childSnapshot.child("title").getValue(String.class); // Get the name
+                            String id = childSnapshot.child("owner").getValue().toString().trim();
+                            String price = childSnapshot.child("price").getValue().toString().trim();
+                            String descr = childSnapshot.child("description").getValue().toString().trim();
+                            String ver = childSnapshot.child("verify").getValue().toString();
+                            String keys = childSnapshot.child("keys").getValue().toString();
+                            contents content = new contents(name, id, descr, price, keys); // Create a new Post object
+                            contentsz.add(content);
+
+                        } else {
+                        }
+
+                    }
+                    contentsAdaptors.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NotNull DatabaseError databaseError) {
+                }
+            });
+        }
+        else if(type1.equals("Expert")){
+            subs.setText("My Content");
+            contentsz.clear();
+            postRecyclerView.setAdapter(contentsAdaptors);
+            FirebaseDatabase ref1 = FirebaseDatabase.getInstance("https://wisebridge-c303a-default-rtdb.firebaseio.com/");
+            databaseReference1 = ref1.getReference().child("Content");
+            contentsz.clear();
+
+            databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                        if (childSnapshot.child("owner").getValue().toString().equals(username2) ){
+
+                            String name = childSnapshot.child("title").getValue(String.class); // Get the name
+                            String id = childSnapshot.child("owner").getValue().toString().trim();
+                            String price = childSnapshot.child("price").getValue().toString().trim();
+                            String descr = childSnapshot.child("description").getValue().toString().trim();
+                            String ver = childSnapshot.child("verify").getValue().toString();
+                            String keys = childSnapshot.child("keys").getValue().toString();
+                            contents content = new contents(name, id, descr, price, keys); // Create a new Post object
+                            contentsz.add(content);
+
+                        } else {
+                        }
+
+                    }
+                    contentsAdaptors.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NotNull DatabaseError databaseError) {
+                }
+            });
+        }
+
+        contentsAdaptors.setOnItemClickListener(new contentsAdaptor.OnItemClickListener() {
+            @Override
+            public void onItemClick(contents content) {
+                //Toast.makeText(Subscriptions.this, "You pressed: "+content.getKeys() +"\nwith description: " + content.getDescript() + "\nwith ID: "+ content.getId(), Toast.LENGTH_SHORT).show();
+               // Log.d("Tag","You pressed: "+content.getKeys() +"\nwith description: " + content.getDescript() + "\nwith ID: "+ content.getId());
+                Intent intent = new Intent(Subscriptions.this, Reviewpage.class);
+                intent.putExtra("Keys", content.getKeys());
+                intent.putExtra("Description",content.getDescript());
+                intent.putExtra("IDowner",content.getId());
+                intent.putExtra("types",type1);
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
+
 }
-}
-}
+
