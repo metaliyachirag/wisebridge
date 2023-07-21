@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_student"
+    app:startDestination="@+id/navigation_home_student">
+
+    <fragment
+        android:id="@+id/navigation_home_student"
+        android:name="com.example.wisebridge.ui.home_student.HomeStudentFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home_student" />
+
+    <fragment
+        android:id="@+id/navigation_content_student"
+        android:name="com.example.wisebridge.ui.content.ContentFragment"
+        android:label="@string/title_content"
+        tools:layout="@layout/fragment_content" />
+
+    <fragment
+        android:id="@+id/navigation_profile_student"
+        android:name="com.example.wisebridge.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
