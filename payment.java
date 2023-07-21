@@ -30,15 +30,13 @@ public class payment extends AppCompatActivity {
     public static DatabaseReference databaseReferencepay,databaseReferencepay1 ;
     private StorageReference storageRef;
     EditText payusername1;
-  
+    Button payverbtn;
     TextView transfer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-
-
 
         String un = getIntent().getStringExtra("username3");
         String key = getIntent().getStringExtra("keys3");
