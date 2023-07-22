@@ -81,6 +81,39 @@ public class payment extends AppCompatActivity {
             }
         });
 
+        payverbtn.setOnClickListener(new View.OnClickListener() {
+
+
+           @Override
+           public void onClick(View v) {
+            databaseReferencepay.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    unames = payusername1.getText().toString().trim();
+                    if(unames.isEmpty()){
+                        Toast.makeText(payment.this, "Enter the transaction ID/Verification ID", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        databaseReferencepay.child("subscribers").child(un).child(un).setValue(un);
+                        databaseReferencepay.child("subscribers").child(un).child("verification_id").setValue(unames);
+                        databaseReferencepay.child("subscribers").child(un).child("payverify").setValue("0");
+                        Toast.makeText(payment.this, "Your order is placed and sent for verification", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(payment.this,profile.class);
+                        intent.putExtra("username",un);
+                        intent.putExtra("type","Student");
+                        startActivity(intent);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+
+                }
+            });
+           }
+       });
+    }
 
 
        
