@@ -65,7 +65,13 @@
             android:layout_height="wrap_content">
 
             <!-- Other content if needed -->
-
+        <Button
+                android:id="@+id/logoutpayv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log out"
+                android:background="@drawable/edittextstyle"
+                android:layout_alignParentBottom="true" />
             
 
         </RelativeLayout>
