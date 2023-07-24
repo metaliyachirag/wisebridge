@@ -165,7 +165,9 @@ contentsAdaptors.setOnItemClickListener(new contentsAdaptor.OnItemClickListener(
                         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
 
                             String name = childSnapshot.child("title").getValue(String.class); // Get the name
-                            String id = childSnapshot.child("owner").getValue().toString().trim();                            
+                            String id = childSnapshot.child("owner").getValue().toString().trim(); 
+                            String price = childSnapshot.child("price").getValue().toString().trim();
+                            String descr = childSnapshot.child("description").getValue().toString().trim();
                             String ver = childSnapshot.child("verify").getValue().toString();
                             String keys = childSnapshot.child("keys").getValue().toString();
                             if(ver.equals("0")){
