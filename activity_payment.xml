@@ -1,0 +1,85 @@
+<androidx.core.widget.NestedScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="248dp"
+            android:background="@color/darkblue"
+            android:orientation="vertical"
+            android:padding="50dp"
+
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                style="@android:style/Widget.TextView.PopupMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Payment info"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/logbtn"
+            android:layout_width="match_parent"
+            android:layout_height="558dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#fff"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:id="@+id/transfer"
+                android:layout_width="362dp"
+                android:layout_height="wrap_content"
+                android:state_hovered="true"
+                android:text="Transfer to "
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+           
+ <EditText
+
+                android:id="@+id/payusername"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:drawableLeft="@drawable/ic_lightbulb_outline_black_24dp"
+                android:drawablePadding="10dp"
+                android:hint="Enter the transaction ID/Verification ID" />
+
+
+<Button
+                android:id="@+id/payverbtn"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/edittextstyle"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="Order"
+                android:textColor="#fff" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
