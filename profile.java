@@ -1,5 +1,6 @@
 package com.example.wisebridge;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +20,33 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class profile extends AppCompatActivity {
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sign Out");
+        builder.setMessage("Are you sure you want to sign out?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(profile.this,Login.class);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Dismiss the dialog and continue with the current flow
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public static DatabaseReference userRef;
     Button signOutButton,Homebtn,hm;
     @Override
@@ -39,6 +68,8 @@ public class profile extends AppCompatActivity {
         hm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if(usertype.equals("Student")){
                     Intent intent = new Intent(profile.this,Subscriptions.class);
                     intent.putExtra("username2", username);
@@ -70,7 +101,7 @@ public class profile extends AppCompatActivity {
             Homebtn.setText("Home");
             hm.setText("Subscriptions");
         }
-        
+
         Homebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,12 +112,16 @@ public class profile extends AppCompatActivity {
                 }
                 else if(usertype.equals("Expert")){
                     Intent intent = new Intent(profile.this,Homeexpert.class);
-                    intent.putExtra("username2", username);
+                    intent.putExtra("username3", username);
                     //intent.putExtra("type",usertype);
                     startActivity(intent);
                 }
             }
         });
+
+
+
+
 
         // Use the username to access corresponding children in the Firebase database
         if(usertype.equals("Student")){
@@ -116,9 +151,6 @@ public class profile extends AppCompatActivity {
                 }
             }
 
-
-
-        
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("Profile", "Error getting data: " + databaseError.getMessage());
