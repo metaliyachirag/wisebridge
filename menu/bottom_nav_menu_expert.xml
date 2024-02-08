@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_home_expert"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Home" />
+        android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_content"
+        android:id="@+id/navigation_content_expert"
         android:icon="@drawable/baseline_view_agenda_24"
-        android:title="Your Content" />
+        android:title="@string/title_content" />
 
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_profile_expert"
         android:icon="@drawable/baseline_account_circle_24"
-        android:title="Profile" />
+        android:title="@string/title_profile" />
 
 </menu>
